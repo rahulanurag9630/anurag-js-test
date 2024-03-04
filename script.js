@@ -1,0 +1,257 @@
+//for name
+
+function validateName() {
+    var nameInput = document.getElementById('name');
+    var nameErrorMessage = document.getElementById('nameErrorMessage');
+
+    if (nameInput.value.trim() === '') {
+        // If the name is empty, display an error message
+        nameErrorMessage.innerHTML = 'Name is required.';
+    } else {
+        // If the name is not empty, clear the error message
+        nameErrorMessage.innerHTML = '';
+
+        // Perform additional validation or submit the form as needed
+        // For example, you can submit the form using nameForm.submit();
+    }
+}
+
+
+//// this is for validating usernames/////////////////////////////////////////////////////////////////////////////
+
+async function loadUsernames() {
+    try {
+      const response = await fetch('/usernames.json'); // Replace with your JSON file path
+      const data = await response.json();
+      return data.usernames;
+    } catch (error) {
+      console.error('Error loading usernames:', error);
+      return [];
+    }
+  }
+
+  let existingUsernames = [];
+
+  // Load the usernames when the page is loaded
+  document.addEventListener('DOMContentLoaded', async () => {
+    existingUsernames = await loadUsernames();
+  });
+
+  async function checkUsernameAvailability() {
+    const usernameInput = document.getElementById('username');
+    const availabilityMessage = document.getElementById('availabilityMessage');
+
+    const username = usernameInput.value.trim();
+
+    if (!username) {
+      availabilityMessage.textContent = 'Please enter a username.';
+      return;
+    }
+
+    // Check if the username exists in the loaded data
+    const isUsernameAvailable = !existingUsernames.includes(username);
+
+    if (isUsernameAvailable) {
+      availabilityMessage.textContent = 'Username is available!';
+    } else {
+      availabilityMessage.textContent = 'Username is not available. Please choose another.';
+    }
+  }
+  // validate email address\
+
+// emailValidation.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    const emailInput = document.getElementById('email');
+    const emailValidationMessage = document.getElementById('emailValidationMessage');
+  
+    emailInput.addEventListener('input', validateEmail);
+  
+    function validateEmail() {
+      const email = emailInput.value.trim();
+  
+      if (!email) {
+        displayMessage('Please enter an email address.', 'invalid-email');
+        return;
+      }
+  
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+      if (emailRegex.test(email)) {
+        displayMessage('Email address is valid!', 'valid-email');
+      } else {
+        displayMessage('Please enter a valid email address.', 'invalid-email');
+      }
+    }
+  
+    function displayMessage(message, className) {
+      emailValidationMessage.textContent = message;
+      emailValidationMessage.className = className;
+    }
+  });
+  
+
+  // this is for confirming emails
+
+// emailValidation.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    const emailInput = document.getElementById('email');
+    const confirmEmailInput = document.getElementById('cemail');
+    const confirmEmailValidationMessage = document.getElementById('confirmEmailValidationMessage');
+  
+    confirmEmailInput.addEventListener('input', validateConfirmEmail);
+  
+    function validateConfirmEmail() {
+      const email = emailInput.value.trim();
+      const confirmEmail = confirmEmailInput.value.trim();
+  
+      if (email === confirmEmail) {
+        displayMessage(confirmEmailValidationMessage, 'Email addresses match.', 'valid-email');
+      } else {
+        displayMessage(confirmEmailValidationMessage, 'Email addresses do not match.', 'invalid-email');
+      }
+    }
+  
+    function displayMessage(element, message, className) {
+      element.textContent = message;
+      element.className = className;
+    }
+  });
+  
+
+  // password strength checker///////////////////////////////////////////////////////
+
+  function checkPasswordStrength() {
+    const passwordInput = document.getElementById('password-input');
+    const strengthText = document.getElementById('password-strength-text');
+
+    const password = passwordInput.value;
+
+    const minLength = 8;
+    const maxLength = 15;
+
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(password);
+
+    let strengthClass = '';
+
+    if (password.length < minLength || password.length > maxLength) {
+      strengthText.textContent = 'Password should be between 8 and 15 characters';
+      strengthClass = 'strength-weak';
+    } else if (!hasUppercase || !hasLowercase || !hasNumber || !hasSpecialChar) {
+      strengthText.textContent = 'Password is moderate';
+      strengthClass = 'strength-moderate';
+    } else {
+      strengthText.textContent = 'Password is strong';
+      strengthClass = 'strength-strong';
+    }
+
+    // Clear previous strength classes
+    strengthText.classList.remove('strength-weak', 'strength-moderate', 'strength-strong');
+    // Apply current strength class
+    strengthText.classList.add(strengthClass);
+  }
+
+  // password confirmation message////////////////////////////////////////
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const passwordInput = document.getElementById('password-input');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const confirmPasswordValidationMessage = document.getElementById('confirmPasswordValidationMessage');
+    const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+
+    passwordInput.addEventListener('input', checkPasswordStrength);
+    confirmPasswordInput.addEventListener('input', validateConfirmPassword);
+
+    function validateConfirmPassword() {
+      const password = passwordInput.value.trim();
+      const confirmPassword = confirmPasswordInput.value.trim();
+
+      if (!confirmPassword) {
+        displayMessage(confirmPasswordValidationMessage, 'Please confirm your password.', 'validation-message');
+        displayMatchMessage(passwordMatchMessage, '', 'match-message');
+        return;
+      }
+
+      if (password === confirmPassword) {
+        displayMessage(confirmPasswordValidationMessage, 'Passwords match.', 'match-message');
+        displayMatchMessage(passwordMatchMessage, 'Passwords match.', 'match-message');
+      } else {
+        displayMessage(confirmPasswordValidationMessage, 'Passwords do not match.', 'validation-message');
+        displayMatchMessage(passwordMatchMessage, 'Passwords do not match.', 'match-message');
+      }
+    }
+
+    function displayMessage(element, message, className) {
+      element.textContent = message;
+      element.className = className;
+    }
+
+    function displayMatchMessage(element, message, className) {
+      element.textContent = message;
+      element.className = className;
+    }
+  });
+
+
+  // validate the user is more than 18 years old
+
+  function validateDOB() {
+    // Get the entered date of birth
+    var dob = new Date(document.getElementById('dob').value);
+
+    // Calculate age
+    var today = new Date();
+    var age = today.getFullYear() - dob.getFullYear();
+    var monthDiff = today.getMonth() - dob.getMonth();
+    
+    // Adjust age if the birthday hasn't occurred yet this year
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+        age--;
+    }
+
+    // Check if age is 18 or older
+    var resultMessage = document.getElementById('resultMessage');
+    
+    if (age >= 18) {
+        // If age is 18 or older, display a success message
+        resultMessage.innerHTML = '<span class="text-success">Form can be submitted. Age is: ' + age + '</span>';
+    } else {
+        // If age is less than 18, display an error message
+        resultMessage.innerHTML = '<span class="text-danger">You must be 18 years or older to submit this form.</span>';
+    }
+}
+
+//validate phone no///////////////////////////////////////////////////////
+function updateCountryCode() {
+    var selectedCode = document.getElementById('countryCode').value;
+    document.getElementById('countryCode').value = selectedCode;
+}
+
+function validatePhoneNumber() {
+    var phoneNumber = document.getElementById('phoneNumber').value;
+    var phoneRegex = /^[0-9]{10}$/; // Phone number pattern
+
+    var phoneValidationMessage = document.getElementById('phoneValidationMessage');
+    if (phoneRegex.test(phoneNumber)) {
+        phoneValidationMessage.innerHTML = '';
+    } else {
+        phoneValidationMessage.innerHTML = 'Please enter a valid phone number.';
+    }
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////
+
+function toggleSubmitButton() {
+    var agreeCheckbox = document.getElementById('agreeCheckbox');
+    var submitButton = document.getElementById('submitButton');
+
+    // Enable or disable the submit button based on the checkbox status
+    submitButton.disabled = !agreeCheckbox.checked;
+}

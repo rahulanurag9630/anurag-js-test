@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Number Validation</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Phone Number Validation</h2>
+    <form id="phoneNumberForm">
+        <div class="mb-3">
+            <!-- Input group for Country Code Dropdown and Phone Number -->
+            <div class="input-group">
+                <!-- Country Code Dropdown -->
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="countryCode">Country Code:</label>
+                    <select class="custom-select" id="countryCode" required>
+                        <option value="+91">+91 (India)</option>
+                        <option value="+1">+1 (United States)</option>
+                        <option value="+44">+44 (United Kingdom)</option>
+                        <option value="+1">+1 (Canada)</option>
+                        <option value="+61">+61 (Australia)</option>
+                        <!-- Add more country code options as needed -->
+                    </select>
+                </div>
+                <!-- Phone Number input -->
+                <input type="tel" class="form-control" id="phoneNumber" oninput="validatePhoneNumber()" placeholder="9876543210" required>
+            </div>
+            <small class="text-muted">Please enter your phone number without the country code.</small>
+            <p id="phoneValidationMessage" class="text-danger mt-1"></p>
+        </div>
+
+        <!-- Submit button -->
+        <button type="button" class="btn btn-primary" onclick="validateForm()">Submit</button>
+
+        <!-- Validation messages -->
+        <p id="validationMessage" class="mt-2"></p>
+    </form>
+</div>
+
+<!-- Bootstrap JS and Popper.js (required for Bootstrap) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+function validatePhoneNumber() {
+    var countryCode = document.getElementById('countryCode').value;
+    var phoneNumber = document.getElementById('phoneNumber').value;
+    
+    // Regular expressions for common country codes
+    var regexMap = {
+        '+91': /^[789][0-9]{9}$/,  // India
+        '+1': /^[0-9]{10}$/,        // United States
+        '+44': /^[1-9]\d{9,}$/i,    // United Kingdom
+        '+1': /^[0-9]{10}$/,        // Canada
+        '+61': /^[1-9]\d{8,9}$/i    // Australia
+        // Add more country code patterns as needed
+    };
+
+    // Display validation messages
+    var phoneValidationMessage = document.getElementById('phoneValidationMessage');
+    if (regexMap[countryCode] && regexMap[countryCode].test(phoneNumber)) {
+        phoneValidationMessage.innerHTML = '';
+    } else {
+        phoneValidationMessage.innerHTML = 'Please enter a valid phone number for the selected country.';
+    }
+}
+
+function validateForm() {
+    // Call the phone number validation function
+    validatePhoneNumber();
+
+    // Display validation messages
+    var validationMessage = document.getElementById('validationMessage');
+    // You can add additional validation logic for the entire form here
+
+    // Example: Display a success message if all validations pass
+    validationMessage.innerHTML = '<span class="text-success">Form can be submitted.</span>';
+}
+</script>
+
+</body>
+</html>

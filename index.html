@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Attractive Bootstrap Form</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script defer src="script.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 400px;
+            margin-top: 50px;
+        }
+
+        #emailValidationMessage {
+            margin-top: 10px;
+            color: black;
+            /* Default color */
+        }
+
+        .valid-email {
+            color: green !important;
+        }
+
+        .invalid-email {
+            color: red !important;
+        }
+
+        .strength-weak {
+            color: #dc3545;
+        }
+
+        .strength-moderate {
+            color: #ffc107;
+        }
+
+        .strength-strong {
+            color: #28a745;
+        }
+
+        .validation-message {
+            margin-top: 5px;
+            color: red;
+        }
+
+        .match-message {
+            margin-top: 5px;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 class="text-center mb-4">Signup Form</h1>
+        <form action="?" method="POST">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+                <p id="nameErrorMessage" class="text-danger mt-2"></p>
+
+            </div>
+
+            <div class="mb-3">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+                <p id="availabilityMessage"></p>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+                <p id="emailValidationMessage"></p>
+            </div>
+            <div class="mb-3">
+                <label for="cemail" class="form-label">Confirm Email address:</label>
+                <input type="email" class="form-control" id="cemail" name="cemail" required>
+                <p id="confirmEmailValidationMessage"></p>
+            </div>
+
+            <div class="mb-3">
+
+                <label for="password" class="form-label">Enter your password:</label>
+                <input type="password" class="form-control" id="password-input" oninput="checkPasswordStrength()"
+                    name="password" required>
+                <p id="password-strength-text"></p>
+            </div>
+
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirm Password:</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                    oninput="validateConfirmPassword()" required>
+                <p id="confirmPasswordValidationMessage" class="validation-message"></p>
+            </div>
+
+            <div class="mb-3">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" class="form-control" id="dob" oninput="validateDOB()" required>
+                <p id="resultMessage" class="mt-2"></p>
+            </div>
+
+
+            <div class="mb-3">
+                <div class="input-group">
+                    <!-- Country Code Dropdown -->
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="countryCode">Country Code:</label>
+                        <select class="custom-select" id="countryCode" required>
+                            <option value="+91">+91 (India)</option>
+                            <option value="+1">+1 (United States)</option>
+                            <option value="+44">+44 (United Kingdom)</option>
+                            <option value="+1">+1 (Canada)</option>
+                            <option value="+61">+61 (Australia)</option>
+                            <!-- Add more country code options as needed -->
+                        </select>
+                    </div>
+                    <!-- Phone Number input -->
+                    <input type="tel" class="form-control" id="phoneNumber" oninput="validatePhoneNumber()"
+                        placeholder="" required>
+                </div>
+                <small class="text-muted">Please enter your phone number without the country code.</small>
+                <p id="phoneValidationMessage" class="text-danger mt-1"></p>
+            </div>
+
+
+            
+            <div class="g-recaptcha" data-sitekey="6LfxF4kpAAAAAIzOlFuv2QDnrcc6O0kUnp1tB2B7"></div>
+           
+                <div class="form-group form-check mt-3">
+                    <input type="checkbox" class="form-check-input" id="agreeCheckbox"  onchange="toggleSubmitButton()">
+                    <label class="form-check-label" for="agreeCheckbox">Please check all the details properly because after your submition you can not revert this</label>
+                </div>
+        
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary mt-3" onclick="checkUsernameAvailability(),validateName()" id="submitButton" disabled>Submit</button>
+
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
