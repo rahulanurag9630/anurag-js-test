@@ -13,19 +13,23 @@
             background-color: #d5f4e6;
 
         }
-        label{
+
+        label {
             color: #618685;
         }
-h1{
-    color: #80ced6;
-}
-.form{
-    border: solid white;
-    width: 70vw;
-    padding: 10%;
-    border-radius: 20px;
-    border: solid #618685;
-}
+
+        h1 {
+            color: #80ced6;
+        }
+
+        .form {
+            border: solid white;
+            width: 70vw;
+            padding: 10%;
+            border-radius: 20px;
+            border: solid #618685;
+        }
+
         .container {
             max-width: 400px;
             margin-top: 50px;
@@ -66,7 +70,8 @@ h1{
             margin-top: 5px;
             color: green;
         }
-        p{
+
+        p {
             font-weight: bold;
         }
     </style>
@@ -75,91 +80,97 @@ h1{
 <body>
 
     <div class="container">
-        <h6>For "Custom Username Validation" i have made a custome json file where some user names like 'anurag' , 'vipul' , 'sachin','om_gupta' are stored and  my endpoint is feching the usernames form that json file if you type these name than it will says that username is not available if you write the user name other than this than it will says username is available . <br> Thank you  </h6>
+        <h6>For "Custom Username Validation" i have made a custome json file where some user names like 'anurag' ,
+            'vipul' , 'sachin','om_gupta' are stored and my endpoint is feching the usernames form that json file if you
+            type these name than it will says that username is not available if you write the user name other than this
+            than it will says username is available . <br> Thank you </h6>
         <div class="form container">
             <h1 class="text-center mb-4">Signup Form</h1>
-        <form action="?" method="POST"><p></p>
-            <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-                <p id="nameErrorMessage" class="text-danger mt-2"></p>
+            <form action="?" onsubmit="return handleFormSubmission()" method="POST">
+                <p></p>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                    <p id="nameErrorMessage" class="text-danger mt-2"></p>
 
-            </div>
+                </div>
 
-            <div class="mb-3">
-                <label for="username" class="form-label">Username:</label>
-                <input type="text" class="form-control" id="username" name="username" required>
-                <p id="availabilityMessage"></p>
-            </div>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username:</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                    <p id="availabilityMessage"></p>
+                </div>
 
-            <div class="mb-3">
-                <label for="email" class="form-label">Email address:</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-                <p id="emailValidationMessage"></p>
-            </div>
-            <div class="mb-3">
-                <label for="cemail" class="form-label">Confirm Email address:</label>
-                <input type="email" class="form-control" id="cemail" name="cemail" required>
-                <p id="confirmEmailValidationMessage"></p>
-            </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address:</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                    <p id="emailValidationMessage"></p>
+                </div>
+                <div class="mb-3">
+                    <label for="cemail" class="form-label">Confirm Email address:</label>
+                    <input type="email" class="form-control" id="cemail" name="cemail" required>
+                    <p id="confirmEmailValidationMessage"></p>
+                </div>
 
-            <div class="mb-3">
+                <div class="mb-3">
 
-                <label for="password" class="form-label">Enter your password:</label>
-                <input type="password" class="form-control" id="password-input" oninput="checkPasswordStrength()"
-                    name="password" required>
-                <p id="password-strength-text"></p>
-            </div>
+                    <label for="password" class="form-label">Enter your password:</label>
+                    <input type="password" class="form-control" id="password-input" oninput="checkPasswordStrength()"
+                        name="password" required>
+                    <p id="password-strength-text"></p>
+                </div>
 
-            <div class="mb-3">
-                <label for="confirmPassword" class="form-label">Confirm Password:</label>
-                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
-                    oninput="validateConfirmPassword()" required>
-                <p id="confirmPasswordValidationMessage" class="validation-message"></p>
-            </div>
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Confirm Password:</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                        oninput="validateConfirmPassword()" required>
+                    <p id="confirmPasswordValidationMessage" class="validation-message"></p>
+                </div>
 
-            <div class="mb-3">
-                <label for="dob">Date of Birth:</label>
-                <input type="date" class="form-control" id="dob" oninput="validateDOB()" required>
-                <p id="resultMessage" class="mt-2"></p>
-            </div>
+                <div class="mb-3">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" class="form-control" id="dob" oninput="validateDOB()" required>
+                    <p id="resultMessage" class="mt-2"></p>
+                </div>
 
 
-            <div class="mb-3">
-                <div class="input-group">
-                    <!-- Country Code Dropdown -->
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" for="countryCode">Country Code:</label>
-                        <select class="custom-select" id="countryCode" required>
-                            <option value="+91">+91 (India)</option>
-                            <option value="+1">+1 (United States)</option>
-                            <option value="+44">+44 (United Kingdom)</option>
-                            <option value="+1">+1 (Canada)</option>
-                            <option value="+61">+61 (Australia)</option>
-                            <!-- Add more country code options as needed -->
-                        </select>
+                <div class="mb-3">
+                    <div class="input-group">
+                        <!-- Country Code Dropdown -->
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="countryCode">Country Code:</label>
+                            <select class="custom-select" id="countryCode" required>
+                                <option value="+91">+91 (India)</option>
+                                <option value="+1">+1 (United States)</option>
+                                <option value="+44">+44 (United Kingdom)</option>
+                                <option value="+1">+1 (Canada)</option>
+                                <option value="+61">+61 (Australia)</option>
+                                <!-- Add more country code options as needed -->
+                            </select>
+                        </div>
+                        <!-- Phone Number input -->
+                        <input type="tel" class="form-control" id="phoneNumber" oninput="validatePhoneNumber()"
+                            placeholder="" required>
                     </div>
-                    <!-- Phone Number input -->
-                    <input type="tel" class="form-control" id="phoneNumber" oninput="validatePhoneNumber()"
-                        placeholder="" required>
+                    <small class="text-muted">Please enter your phone number without the country code.</small>
+                    <p id="phoneValidationMessage" class="text-danger mt-1"></p>
                 </div>
-                <small class="text-muted">Please enter your phone number without the country code.</small>
-                <p id="phoneValidationMessage" class="text-danger mt-1"></p>
-            </div>
 
 
-            
-            <div class="g-recaptcha" data-sitekey="6LdxSokpAAAAAMvIeMEW-B5QYdJF9zo1V4B4zzYd"></div>
-           
+
+                <div class="g-recaptcha" data-sitekey="6LfxF4kpAAAAAIzOlFuv2QDnrcc6O0kUnp1tB2B7"></div>
+
                 <div class="form-group form-check mt-3">
-                    <input type="checkbox" class="form-check-input" id="agreeCheckbox"  onchange="toggleSubmitButton()">
-                    <label class="form-check-label" for="agreeCheckbox">Please check all the details properly because after your submition you can not revert this</label>
+                    <input type="checkbox" class="form-check-input" id="agreeCheckbox" onchange="toggleSubmitButton()">
+                    <label class="form-check-label" for="agreeCheckbox">Please check all the details properly because
+                        after your submition you can not revert this</label>
                 </div>
-        
-                <!-- Submit button -->
-                <button type="submit" class="btn btn-primary mt-3" onclick="checkUsernameAvailability(),validateName()" id="submitButton" disabled>Submit</button>
 
-        </form>
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary mt-3" onclick="checkUsernameAvailability(),validateName()"
+                    id="submitButton" disabled>Submit</button>
+
+            </form>
         </div>
     </div>
 
