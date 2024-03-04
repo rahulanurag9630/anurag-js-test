@@ -53,8 +53,10 @@ async function loadUsernames() {
 
     if (isUsernameAvailable) {
       availabilityMessage.textContent = 'Username is available!';
+      availabilityMessage.className = 'text-success'
     } else {
       availabilityMessage.textContent = 'Username is not available. Please choose another.';
+      availabilityMessage.className ='text-danger';
     }
   }
   // validate email address\
