@@ -257,3 +257,16 @@ function toggleSubmitButton() {
     // Enable or disable the submit button based on the checkbox status
     submitButton.disabled = !agreeCheckbox.checked;
 }
+
+
+// onsubmite function
+
+function handleFormSubmission() {
+    // Perform any form validation if needed
+
+    // Show an alert indicating successful form submission
+    alert("Form submitted successfully!");
+
+    // Prevent the default form submission behavior
+    return false;
+}
