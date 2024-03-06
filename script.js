@@ -1,15 +1,23 @@
-document.getElementById('username').addEventListener('input', function () {
+document.getElementById('name').addEventListener('input', function () {
   var username = this.value;
-  var errorElement = document.getElementById('usernameError');
+  var errorElement = document.getElementById('nameErrorMessage');
 
+  // Check if the input contains only characters (letters)
+  if (!/^[a-zA-Z]+$/.test(username)) {
+      errorElement.textContent = 'Name must contain only alphabetical characters.';
+      return;
+  }
+
+  // Check the length of the name
   if (username.length < 3) {
-      errorElement.textContent = 'Username must be at least 3 characters long.';
-  } else if (username.length > 20) {
-      errorElement.textContent = 'Username cannot exceed 20 characters.';
+      errorElement.textContent = 'Name must be at least 3 characters long.';
+  } else if (username.length > 35) {
+      errorElement.textContent = 'Name cannot exceed 35 characters.';
   } else {
       errorElement.textContent = ''; // Clear the error message if within the limits
   }
 });
+
 
 //for name
 
@@ -51,7 +59,7 @@ async function loadUsernames() {
     existingUsernames = await loadUsernames();
   });
 
-  async function checkUsernameAvailability() {
+  document.getElementById('username').addEventListener('input', async function() {
     const usernameInput = document.getElementById('username');
     const availabilityMessage = document.getElementById('availabilityMessage');
 
@@ -72,7 +80,9 @@ async function loadUsernames() {
       availabilityMessage.textContent = 'Username is not available. Please choose another.';
       availabilityMessage.className ='text-danger';
     }
-  }
+  })
+
+  
   // validate email address\
 
 // emailValidation.js
@@ -91,13 +101,23 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
   
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const emailRegex = /^[a-zA-Z._%+-][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      ;
   
       if (emailRegex.test(email)) {
         displayMessage('Email address is valid!', 'valid-email');
       } else {
         displayMessage('Please enter a valid email address.', 'invalid-email');
       }
+      if (!email) {
+        displayMessage('Please enter an email address.', 'invalid-email');
+        return;
+    }
+
+    if (email.length > 40) {
+        displayMessage('Email address must be 40 characters or less.', 'invalid-email');
+        return;
+    }
     }
   
     function displayMessage(message, className) {
@@ -108,11 +128,34 @@ document.addEventListener('DOMContentLoaded', () => {
   
 
   // this is for confirming emails
+  const emailInput = document.getElementById('email');
+  const confirmEmailInput = document.getElementById('cemail');
+  const confirmEmailValidationMessage = document.getElementById('confirmEmailValidationMessage');
 
+  // Add input event listener to the confirmation email field
+  confirmEmailInput.addEventListener('input', validateConfirmEmail);
+
+  function validateConfirmEmail() {
+      const email = emailInput.value.trim();
+      const confirmEmail = confirmEmailInput.value.trim();
+
+      if (!confirmEmail) {
+          displayMessage('Please confirm your email address.', 'text-danger', confirmEmailValidationMessage);
+      } else if (confirmEmail !== email) {
+          displayMessage('Email addresses do not match.', 'text-danger', confirmEmailValidationMessage);
+      } else {
+          displayMessage('Email addresses match!', 'text-success', confirmEmailValidationMessage);
+      }
+  }
+
+  function displayMessage(message, className, element) {
+      element.textContent = message;
+      element.className = className;
+  }
 // emailValidation.js
 
 document.addEventListener('DOMContentLoaded', () => {
-  const emailInput = document.getElementById('email');
+  const emailInput = document.getElementById('cxemail');
   const emailValidationMessage = document.getElementById('emailValidationMessage');
 
   emailInput.addEventListener('input', validateEmail);
@@ -125,8 +168,8 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
       }
 
-      if (email.length > 30) {
-          displayMessage('Email address must be 30 characters or less.', 'invalid-email');
+      if (email.length > 40) {
+          displayMessage('Email address must be 40 characters or less.', 'invalid-email');
           return;
       }
 
