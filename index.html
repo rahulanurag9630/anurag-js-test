@@ -97,8 +97,9 @@
 
                 <div class="mb-3">
                     <label for="username" class="form-label">Username:</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
+                    <input type="text" class="form-control" id="username" name="username" minlength="3" maxlength="20" required>
                     <p id="availabilityMessage"></p>
+                    <div class="text-danger" id="usernameError"></div>
                 </div>
 
                 <div class="mb-3">
@@ -158,7 +159,7 @@
 
 
 
-                <div class="g-recaptcha" data-sitekey="6LdxSokpAAAAAMvIeMEW-B5QYdJF9zo1V4B4zzYd"></div>
+                <div class="g-recaptcha" data-sitekey="6LfxF4kpAAAAAIzOlFuv2QDnrcc6O0kUnp1tB2B7"></div>
 
                 <div class="form-group form-check mt-3">
                     <input type="checkbox" class="form-check-input" id="agreeCheckbox" onchange="toggleSubmitButton()">
