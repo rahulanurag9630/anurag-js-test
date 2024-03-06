@@ -1,4 +1,5 @@
 document.getElementById('name').addEventListener('input', function () {
+  var name = document.getElementById('name')
   var username = this.value;
   var errorElement = document.getElementById('nameErrorMessage');
 
@@ -11,10 +12,16 @@ document.getElementById('name').addEventListener('input', function () {
   // Check the length of the name
   if (username.length < 3) {
     errorElement.textContent = 'Name must be at least 3 characters long.';
+    name.classList.add("is-invalid");
+
   } else if (username.length > 35) {
     errorElement.textContent = 'Name cannot exceed 35 characters.';
+    name.classList.add("is-invalid");
+
   } else {
     errorElement.textContent = ''; // Clear the error message if within the limits
+    name.classList.remove("is-invalid");
+
   }
 });
 
@@ -67,6 +74,8 @@ document.getElementById('username').addEventListener('input', async function () 
 
   if (!username) {
     availabilityMessage.textContent = 'Please enter a username.';
+    usernameInput.classList.add("is-invalid");
+
     return;
   }
 
@@ -76,9 +85,13 @@ document.getElementById('username').addEventListener('input', async function () 
   if (isUsernameAvailable) {
     availabilityMessage.textContent = 'Username is available!';
     availabilityMessage.className = 'text-success'
+    usernameInput.classList.remove("is-invalid");
+
   } else {
     availabilityMessage.textContent = 'Username is not available. Please choose another.';
     availabilityMessage.className = 'text-danger';
+    usernameInput.classList.add("is-invalid");
+
   }
 })
 
@@ -98,6 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!email) {
       displayMessage('Please enter an email address.', 'invalid-email');
+      emailInput.classList.add("is-invalid");
+
       return;
     }
 
@@ -106,16 +121,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (emailRegex.test(email)) {
       displayMessage('Email address is valid!', 'valid-email');
+      emailInput.classList.remove("is-invalid");
+
     } else {
       displayMessage('Please enter a valid email address.', 'invalid-email');
+      emailInput.classList.add("is-invalid");
+
     }
     if (!email) {
       displayMessage('Please enter an email address.', 'invalid-email');
+      emailInput.classList.add("is-invalid");
+
       return;
     }
 
     if (email.length > 40) {
       displayMessage('Email address must be 40 characters or less.', 'invalid-email');
+      emailInput.classList.add("is-invalid");
+
       return;
     }
   }
@@ -141,10 +164,16 @@ function validateConfirmEmail() {
 
   if (!confirmEmail) {
     displayMessage('Please confirm your email address.', 'text-danger', confirmEmailValidationMessage);
+    confirmEmailInput.classList.add("is-invalid");
+
   } else if (confirmEmail !== email) {
     displayMessage('Email addresses do not match.', 'text-danger', confirmEmailValidationMessage);
+    confirmEmailInput.classList.add("is-invalid");
+
   } else {
     displayMessage('Email addresses match!', 'text-success', confirmEmailValidationMessage);
+    confirmEmailInput.classList.remove("is-invalid");
+
   }
 }
 
@@ -240,6 +269,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!confirmPassword) {
       displayMessage(confirmPasswordValidationMessage, 'Please confirm your password.', 'validation-message');
       displayMatchMessage(passwordMatchMessage, '', 'match-message');
+      confirmPasswordInput.classList.add("is-invalid");
+
       return;
     }
 
@@ -249,6 +280,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       displayMessage(confirmPasswordValidationMessage, 'Passwords do not match.', 'validation-message');
       displayMatchMessage(passwordMatchMessage, 'Passwords do not match.', 'match-message');
+      confirmPasswordInput.classList.add("is-invalid");
+
     }
   }
 
@@ -267,6 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // validate the user is more than 18 years old
 
 function validateDOB() {
+  var dob = document.getElementById("dob");
   // Get the entered date of birth
   var dob = new Date(document.getElementById('dob').value);
 
@@ -289,6 +323,8 @@ function validateDOB() {
   } else {
     // If age is less than 18, display an error message
     resultMessage.innerHTML = '<span class="text-danger">You must be 18 years or older to submit this form.</span>';
+    dob.classList.add("is-invalid");
+
   }
 }
 
