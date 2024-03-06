@@ -1,3 +1,16 @@
+document.getElementById('username').addEventListener('input', function () {
+  var username = this.value;
+  var errorElement = document.getElementById('usernameError');
+
+  if (username.length < 3) {
+      errorElement.textContent = 'Username must be at least 3 characters long.';
+  } else if (username.length > 20) {
+      errorElement.textContent = 'Username cannot exceed 20 characters.';
+  } else {
+      errorElement.textContent = ''; // Clear the error message if within the limits
+  }
+});
+
 //for name
 
 function validateName() {
@@ -15,6 +28,7 @@ function validateName() {
         // For example, you can submit the form using nameForm.submit();
     }
 }
+
 
 
 //// this is for validating usernames/////////////////////////////////////////////////////////////////////////////
@@ -98,30 +112,38 @@ document.addEventListener('DOMContentLoaded', () => {
 // emailValidation.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    const emailInput = document.getElementById('email');
-    const confirmEmailInput = document.getElementById('cemail');
-    const confirmEmailValidationMessage = document.getElementById('confirmEmailValidationMessage');
-  
-    confirmEmailInput.addEventListener('input', validateConfirmEmail);
-  
-    function validateConfirmEmail() {
-      const email = emailInput.value.trim();
-      const confirmEmail = confirmEmailInput.value.trim();
-  
-      if (email === confirmEmail) {
-        displayMessage(confirmEmailValidationMessage, 'Email addresses match.', 'valid-email');
-      } else {
-        displayMessage(confirmEmailValidationMessage, 'Email addresses do not match.', 'invalid-email');
-      }
-    }
-  
-    function displayMessage(element, message, className) {
-      element.textContent = message;
-      element.className = className;
-    }
-  });
-  
+  const emailInput = document.getElementById('email');
+  const emailValidationMessage = document.getElementById('emailValidationMessage');
 
+  emailInput.addEventListener('input', validateEmail);
+
+  function validateEmail() {
+      const email = emailInput.value.trim();
+
+      if (!email) {
+          displayMessage('Please enter an email address.', 'invalid-email');
+          return;
+      }
+
+      if (email.length > 30) {
+          displayMessage('Email address must be 30 characters or less.', 'invalid-email');
+          return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (emailRegex.test(email)) {
+          displayMessage('Email address is valid!', 'valid-email');
+      } else {
+          displayMessage('Please enter a valid email address.', 'invalid-email');
+      }
+  }
+
+  function displayMessage(message, className) {
+      emailValidationMessage.textContent = message;
+      emailValidationMessage.className = className;
+  }
+});
   // password strength checker///////////////////////////////////////////////////////
 
   function checkPasswordStrength() {
